@@ -14,7 +14,7 @@ def set_search_item(user_job, user_location):
     soup = BeautifulSoup(req.content, "html.parser")
 
     # print the website were we scrapped the results from
-    print("Website: Linkedin", end = "")
+    print("Website: linkedin", end = "")
     # next operation in line is to print the number of jobs on the website
     number_of_jobs(soup)
 
