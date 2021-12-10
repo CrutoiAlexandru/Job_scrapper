@@ -20,7 +20,8 @@ def set_search_item(user_job, user_location):
 
 def number_of_jobs(soup):
     # print the number of jobs on the website
-    print("\tNumber of jobs:", soup.find("span", class_="results-context-header__job-count").get_text())
+    try: print("\tNumber of jobs:", soup.find("span", class_="results-context-header__job-count").get_text())
+    except Exception: print("\t\tNumber of jobs: missing data")
     print("\n")
 
 def visit():
