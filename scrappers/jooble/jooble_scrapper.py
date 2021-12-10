@@ -18,28 +18,27 @@ def set_search_item(user_job, user_location):
     # create the global item to search for
     global search_item
     # update the item to search for with user provided data
-    search_item = f"https://{my_country}.indeed.com/{user_job}-jobs-in-{user_location}"
+    search_item = f"https://{my_country}.jooble.org/SearchResult?rgns={user_location}&ukw={user_job}"
 
     # make a request to linkedin.com
     try: req  = requests.get(search_item)
-    except Exception: print("Could not make the indeed.com request. Please check that indeed supports your country!")
+    except Exception: print("Could not make the jooble.org request. Please check that indeed supports your country!")
     # make the request a BeautifulSoup element
     soup = BeautifulSoup(req.content, "html.parser")
 
     # print the website were we scrapped the results from
-    print("Website: indeed", end = "")
+    print("Website: jooble", end = "")
     # next operation in line is to print the number of jobs on the website
     number_of_jobs(soup)
 
-# function to isolate the number of jobs out of a string like: page 1 of <<200>> jobs
+# function to isolate the number of jobs out of a string like: <<100>> jobs
 def isolate_number(soup):
     # isolate the div containing the number of jobs
-    soup = soup.find("div", id="searchCountPages").get_text()
+    soup = soup.find("div", class_="_303e9").get_text()
     # split the soup element in a list of strings
     soup_list = soup.split(" ")
 
-    # the number of jobs is for sure a digit so we will retain only digits and for sure last because it is the last number of the string list
-    # so we retain the last number in the string
+    # the number of jobs is always the first of the string list on this website
     for index in range(len(soup_list)):
         if soup_list[index].replace(".", "").isdigit():  number_of_jobs = soup_list[index]
 
